@@ -16,22 +16,20 @@ class NoteBloc extends Bloc<NoteEvent, NoteState> {
 
     on<AddNote>((event, emit) async {
       final updateNotes = List<String>.from(state.notes)..add(event.note);
-      final pref = SharedPreferences.getInstance();
-      pref.then((value) => value.setStringList('notes', updateNotes));
+      SharedPreferences.getInstance()
+          .then((value) => value.setStringList('notes', updateNotes));
       emit(NoteState(updateNotes));
     });
 
     on<DeleteNote>((event, emit) {
       final updateNotes = List<String>.from(state.notes)..remove(event.note);
-      final pref = SharedPreferences.getInstance();
-      pref.then((value) => value.setStringList('notes', updateNotes));
+      SharedPreferences.getInstance()
+          .then((value) => value.setStringList('notes', updateNotes));
       emit(NoteState(updateNotes));
     });
 
     on<ClearNotes>((event, emit) {
-      final pref = SharedPreferences.getInstance();
-      pref.then((value) => value.remove('notes'));
-
+      SharedPreferences.getInstance().then((value) => value.remove('notes'));
       emit(NoteState([]));
     });
   }
